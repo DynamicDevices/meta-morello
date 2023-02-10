@@ -12,7 +12,7 @@ DEPENDS                 += "rsync-native"
 PROVIDES                += "virtual/${OUTPUTS_NAME}"
 
 SRC_URI = " \
-    git://git.morello-project.org/morello/kernel/linux;protocol=https;tag=${SRCTAG};branch=${SRCBRANCH} \
+    git://git.morello-project.org/morello/kernel/linux;protocol=https;branch=${SRCBRANCH} \
     "
 
 PV  = "${LINUX_VERSION}+git${SRCPV}"

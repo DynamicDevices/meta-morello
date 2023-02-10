@@ -11,11 +11,11 @@ PROVIDES     = "${OUTPUTS_NAME}-native"
 LIC_FILES_CHKSUM  = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
 SRC_URI = " \
-    git://git.morello-project.org/morello/kernel/linux;protocol=https;tag=${SRCTAG};branch=${SRCBRANCH} \
+    git://git.morello-project.org/morello/kernel/linux;protocol=https;branch=${SRCBRANCH} \
     "
 
 SRCBRANCH     = "morello/master"
-SRCTAG        = "morello-release-1.5.0"
+SRCREV = "87d06928f90fe910311210a0149d03f3420f593c"
 
 S             = "${WORKDIR}/git/usr"
 

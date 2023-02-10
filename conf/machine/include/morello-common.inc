@@ -2,6 +2,9 @@ require ${COREBASE}/meta/conf/machine/include/arm/armv8-2a/tune-neoversen1.inc
 
 MACHINEOVERRIDES =. "morello"
 
+PREFERRED_PROVIDER_virtual/kernel = "linux-morello"
+PREFERRED_VERSION_virtual/kernel = "1.5"
+
 LLVM_SHARED_SOURCE ?= "${TMPDIR}/work-shared/${MACHINE}/llvm-morello-source"
 
 MUSL_INSTALL_DIR ??=""
