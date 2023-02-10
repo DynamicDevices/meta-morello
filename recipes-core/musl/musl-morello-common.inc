@@ -1,5 +1,3 @@
-require musl-morello-${MORELLO_RELEASE_VERSION}.inc
-
 DESCRIPTION        = "CHERI enabled musl libc"
 OUTPUTS_NAME       = "libc"
 LICENSE            = "MIT"

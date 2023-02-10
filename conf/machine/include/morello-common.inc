@@ -1,5 +1,4 @@
 require ${COREBASE}/meta/conf/machine/include/arm/armv8-2a/tune-neoversen1.inc
-require conf/machine/include/morello-1.5.inc
 
 MACHINEOVERRIDES =. "morello"
 
