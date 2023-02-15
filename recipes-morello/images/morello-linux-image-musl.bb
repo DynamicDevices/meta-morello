@@ -86,7 +86,7 @@ do_install() {
     : > ${OUTPUTS_NAME}.img
     truncate --size="$(mult ${IMAGE_SIZE} 3)M" ${OUTPUTS_NAME}.img
 
-    create_gpt ${OUTPUTS_NAME}.img ${ESP_IMAGE}.img /home/pawel/Code/ArmMorello/linux/output/root.img
+    create_gpt ${OUTPUTS_NAME}.img ${ESP_IMAGE}.img ${D}/root.img
     install ${OUTPUTS_NAME}.img ${D}/${OUTPUTS_NAME}.img
 }
 

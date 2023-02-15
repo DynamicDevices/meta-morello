@@ -1,0 +1,16 @@
+#! /bin/bash
+
+# This script is expecting an input of machine name, optionally followed by a
+# colon and a list of one or more parameters separated by commas between
+# brackets.  For example, the following are acceptable:
+# qemu-x86
+# qemu-cortex-m3: [testimage]
+# qemu-cortex-a53: [zephyr-toolchain, testimage]
+#
+# Turn this list into a series of yml files separated by colons to pass to kas
+
+set -e -u
+
+FILES="kas/$(echo $1 | cut -d ':' -f 1).yml"
+
+echo $FILES
