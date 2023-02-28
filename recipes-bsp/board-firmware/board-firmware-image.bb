@@ -8,9 +8,19 @@ LIC_FILES_CHKSUM   = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ec
 OUTPUTS_NAME       = "board-firmware-sd-image"
 SECTION            = "firmware"
 
+MACHINE_BOARD_REQUIRE ?= ""
+MACHINE_BOARD_REQUIRE:morello-fvp = "board-morello-fvp.inc"
+MACHINE_BOARD_REQUIRE:morello-soc = "board-morello-soc.inc"
+require ${MACHINE_BOARD_REQUIRE}
+
+PACKAGE_ARCH       = "${MACHINE_ARCH}"
+
 BB_DONT_CACHE      = "1"
 
-DEPENDS           += "virtual/board-firmware virtual/scp-firmware virtual/trusted-firmware-a virtual/uefi virtual/grub-efi mtools-native fiptool-native"
+DEPENDS           += "virtual/board-firmware virtual/scp-firmware \
+                      virtual/trusted-firmware-a virtual/uefi virtual/grub-efi \
+                      mtools-native fiptool-native"
+
 PROVIDES           = "virtual/board-firmware-image"
 
 MCP_BLOB_ID   = "54464222-a4cf-4bf8-b1b6-cee7dade539e"
@@ -43,11 +53,11 @@ do_install[depends] += "virtual/trusted-firmware-a:do_populate_sysroot"
 do_install:prepend() {
 
     fiptool create \
-         --scp-fw "${FIRMWARE_PATH}/scp_ramfw_soc.bin" \
+         --scp-fw "${FIRMWARE_PATH}/scp_ramfw_${TARGET_PLATFORM}.bin" \
         "${FIRMWARE_PATH}/scp_fw.bin"
 
     fiptool create \
-        --blob uuid="${MCP_BLOB_ID}",file="${FIRMWARE_PATH}/mcp_ramfw_soc.bin" \
+        --blob uuid="${MCP_BLOB_ID}",file="${FIRMWARE_PATH}/mcp_ramfw_${TARGET_PLATFORM}.bin" \
         "${FIRMWARE_PATH}/mcp_fw.bin"
 
     install -d "${FIRMWARE_PATH}/tfa_certs"
@@ -78,5 +88,8 @@ do_install() {
 
 do_deploy() {
     cp -rf ${D}/firmware/board-firmware-image/${OUTPUTS_NAME}.img ${DEPLOYDIR}/${OUTPUTS_NAME}.img
+    install ${SYSROOT_SOFTWARE_PATH}/fip.bin ${DEPLOYDIR}/fip.bin
+    install ${SYSROOT_SOFTWARE_PATH}/scp_fw.bin ${DEPLOYDIR}/scp_fw.bin
+    install ${SYSROOT_SOFTWARE_PATH}/mcp_fw.bin ${DEPLOYDIR}/mcp_fw.bin
 }
 addtask deploy after do_install
