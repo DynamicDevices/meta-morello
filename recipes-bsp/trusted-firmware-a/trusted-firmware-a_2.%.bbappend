@@ -5,6 +5,12 @@ SUMMARY            = "TF-A to be compiled with LLVM Morello"
 OUTPUTS_NAME       = "trusted-firmware-a"
 SECTION            = "firmware"
 
+MACHINE_TFA_REQUIRE ?= ""
+MACHINE_TFA_REQUIRE:morello-fvp = "tfa-firmware-morello-fvp.inc"
+MACHINE_TFA_REQUIRE:morello-soc = "tfa-firmware-morello-soc.inc"
+
+require ${MACHINE_TFA_REQUIRE}
+
 PROVIDES          += "virtual/${OUTPUTS_NAME}"
 
 SRC_URI     = "gitsm://git.morello-project.org/morello/trusted-firmware-a;protocol=https;name=tfa;branch=${SRCBRANCH}"
@@ -26,8 +32,6 @@ TFA_UBOOT        = "0"
 TFA_BUILD_TARGET = "bl1 bl2 bl31 dtbs"
 TFA_DEBUG        = "0"
 
-TFA_INSTALL_TARGET = "bl1 bl2 bl31 dtbs morello-soc morello_fw_config morello_tb_fw_config morello_nt_fw_config "
-
 ARM_TF_ARCH = "aarch64"
 
 EXTRA_OEMAKE += "\
@@ -36,7 +40,7 @@ EXTRA_OEMAKE += "\
                 ROT_KEY=plat/arm/board/common/rotpk/arm_rotprivk_rsa.pem \
                 TRUSTED_BOARD_BOOT=1 \
                 ARM_ROTPK_LOCATION=devel_rsa \
-                TARGET_PLATFORM=soc \
+                TARGET_PLATFORM='${TARGET_PLATFORM}' \
                 ENABLE_MORELLO_CAP=1 \
                 ARCH='${ARM_TF_ARCH}' \
             "
