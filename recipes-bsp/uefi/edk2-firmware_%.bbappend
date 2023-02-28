@@ -5,6 +5,11 @@ SUMMARY            = "EDK2 to be compiled with LLVM Morello"
 OUTPUTS_NAME       = "uefi"
 SECTION            = "firmware"
 
+MACHINE_EDK2_REQUIRE ?= ""
+MACHINE_EDK2_REQUIRE:morello-fvp = "edk2-firmware-morello-fvp.inc"
+MACHINE_EDK2_REQUIRE:morello-soc = "edk2-firmware-morello-soc.inc"
+require ${MACHINE_EDK2_REQUIRE}
+
 PROVIDES          += "virtual/${OUTPUTS_NAME}"
 DEPENDS           += "acpica-native python3-native"
 
@@ -26,8 +31,7 @@ SRCREV_edk2-platforms  = "6bae2381d664e668875720e7eb86f751cb1de373"
 PV                     = "git${SRCPV}"
 
 EDK2_BUILD_RELEASE = "0"
-EDK2_PLATFORM      = "morellosoc"
-EDK2_PLATFORM_DSC  = "edk2-platforms/Platform/ARM/Morello/MorelloPlatformSoc.dsc"
+
 EDK2_BIN_NAME      = "BL33_AP_UEFI.fd"
 EDK2_ARCH          = "AARCH64"
 EDK2_BUILD_FLAGS  += "-D ENABLE_MORELLO_CAP=1"
