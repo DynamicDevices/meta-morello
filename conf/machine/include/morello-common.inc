@@ -23,7 +23,4 @@ GLOBAL_ARCH_TRIPLE ?= "${C64_ARCH_TRIPLE}"
 GLOBAL_LIB_TRIPLE  ?= "${C64_LIB_TRIPLE}"
 GLOBAL_ARCH_FLAGS  ?= "${C64_ARCH_FLAGS}"
 
-TMPDIR_BSP   = "tmp-bsp"
-TMPDIR_LINUX = "tmp-linux"
-
 APP_DIR ?= "pure-cap-apps"
