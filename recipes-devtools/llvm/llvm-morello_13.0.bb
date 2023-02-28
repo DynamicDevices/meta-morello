@@ -1,5 +1,5 @@
 
-COMPATIBLE_MACHINE = "morello-linux"
+COMPATIBLE_MACHINE = "morello"
 DESCRIPTION        = "The Morello LLVM Compiler Infrastructure for A64"
 SUMMARY            = "LLVM Morello"
 HOMEPAGE           = "https://git.morello-project.org/morello/llvm-project-releases"

@@ -1,8 +1,8 @@
 require musl-morello-${MORELLO_ARCH}.inc musl-morello-${MORELLO_ARCH}-so.inc musl-morello-target.inc
 
 MACHINE_INC ?= ""
-MACHINE_INC:morello-linux-glibc = "override-glibc.inc"
-MACHINE_INC:morello-linux-musl  = "override-musl.inc"
+MACHINE_INC:morello-soc = "override-glibc.inc"
+MACHINE_INC:morello-fvp = "override-glibc.inc"
 
 require ${MACHINE_INC}
 
