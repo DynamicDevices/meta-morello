@@ -40,21 +40,6 @@ echo "Installing busybox..."
 
 ! grep -qE $'\t'"devtmpfs$" /proc/filesystems && mdev -s
 
-ROOT="/newroot"
-
-PARTUUID=$(cat proc/cmdline | sed 's/ /\n/g' | sed -n 's/^root=PARTUUID=*//p')
-
-DEVID=$(blkid | sed -n "s/UUID=\"$PARTUUID\" TYPE=\"ext4\"*//p" | sed 's/://')
-
-echo "Mounting ${DEVID} rootfs with PARTUUID: ${PARTUUID}"
-
-mount ${DEVID} ${ROOT}
-
-ulimit -c unlimited
-
-cd ${ROOT}
-exec switch_root . /sbin/init </dev/ttyAMA0 >dev/ttyAMA0 2>&1
-
 echo "/bin/sh as PID 1!"
 echo "init.sh"
 exec setsid cttyhack sh

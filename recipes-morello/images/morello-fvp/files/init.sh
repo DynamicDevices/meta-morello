@@ -1,15 +1,31 @@
 #!/bin/busybox sh
 
-# Copyright (c) 2021 Arm Limited. All rights reserved.
-#
-# SPDX-License-Identifier: BSD-3-Clause
-
 mount() {
     /bin/busybox mount "$@"
 }
 
+umount() {
+    /bin/busybox umount "$@"
+}
+
 grep() {
     /bin/busybox grep "$@"
+}
+
+cp() {
+    /bin/busybox cp "$@"
+}
+
+mkdir() {
+    /bin/busybox mkdir "$@"
+}
+
+switch_root () {
+    /bin/busybox switch_root "$@"
+}
+
+sed () {
+    /bin/busybox sed "$@"
 }
 
 echo "Running init script"
@@ -18,13 +34,11 @@ mount -t proc proc /proc
 grep -qE $'\t'"devtmpfs$" /proc/filesystems && mount -t devtmpfs dev /dev
 mount -t sysfs sysfs /sys
 
-echo "Installing busybox"
+echo "Installing busybox..."
 
 /bin/busybox --install -s
 
 ! grep -qE $'\t'"devtmpfs$" /proc/filesystems && mdev -s
-
-ulimit -c unlimited
 
 echo "/bin/sh as PID 1!"
 echo "init.sh"
