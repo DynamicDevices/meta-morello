@@ -1,0 +1,1 @@
+FW_INSTALL = "ramfw_fvp romfw"

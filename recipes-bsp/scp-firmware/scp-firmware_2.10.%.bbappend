@@ -4,6 +4,11 @@ COMPATIBLE_MACHINE = "morello"
 OUTPUTS_NAME       = "scp-firmware"
 SECTION            = "firmware"
 
+MACHINE_SCP_REQUIRE ?= ""
+MACHINE_SCP_REQUIRE:morello-fvp = "scp-firmware-morello-fvp.inc"
+MACHINE_SCP_REQUIRE:morello-soc = "scp-firmware-morello-soc.inc"
+require ${MACHINE_SCP_REQUIRE}
+
 DEPENDS           += "virtual/board-firmware"
 
 PROVIDES          += "virtual/${OUTPUTS_NAME}"
@@ -21,11 +26,10 @@ SENSOR        = "${RECIPE_SYSROOT}/board-firmware/LIB/sensor.a"
 B             = "${WORKDIR}/build/morello"
 
 FW_TARGETS    = "scp mcp"
-FW_INSTALL    = "ramfw_soc romfw"
 
 unset do_configure[noexec]
 unset do_compile[cleandirs]
-do_deploy[noexec] = "1"
+do_configure[depends]  += "board-firmware:do_install"
 
 do_configure() {
 
