@@ -6,7 +6,9 @@ LICENSE            = "STMicroelectronics & BSD-3-Clause & BSD-2-Clause"
 OUTPUTS_NAME       = "board-firmware"
 SECTION            = "firmware"
 
-PROVIDES += "virtual/${OUTPUTS_NAME}"
+PROVIDES          += "virtual/${OUTPUTS_NAME}"
+
+PACKAGE_ARCH       = "${MACHINE_ARCH}"
 
 SRC_URI = "git://git.morello-project.org/morello/board-firmware;protocol=https;branch=${SRCBRANCH}"
 SRCREV  = "20e3e673f13e854109a069dd719f49e06336142d"

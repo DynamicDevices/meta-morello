@@ -1,6 +1,6 @@
 inherit llvm-morello-native
 
-COMPATIBLE_MACHINE = "morello-linux"
+COMPATIBLE_MACHINE = "morello"
 SUMMARY            = "CHERI enabled busybox"
 LICENSE            = "GPL-2.0-only"
 SECTION            = "base"

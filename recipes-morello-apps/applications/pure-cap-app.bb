@@ -1,6 +1,6 @@
 inherit pure-cap-application llvm-morello-native
 
-COMPATIBLE_MACHINE = "morello-linux"
+COMPATIBLE_MACHINE = "morello"
 SUMMARY            = "Simple capability application"
 DESCRIPTION        = "Application used in the series of blogs found @ https://www.thegoodpenguin.co.uk/blog/tag/morello/"
 OUTPUTS_NAME       = "pure-cap-app"

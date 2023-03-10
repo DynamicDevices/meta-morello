@@ -1,6 +1,6 @@
 inherit deploy nopackages
 
-COMPATIBLE_MACHINE = "morello-linux-glibc"
+COMPATIBLE_MACHINE = "morello"
 SUMMARY            = "Bootable Morello Linux Image"
 DESCRIPTION        = "Image that goes on a bootable device, can be DD'ed onto a USB stick"
 LICENSE            = "MIT"
@@ -9,7 +9,15 @@ OUTPUTS_NAME       = "morello-linux-image"
 
 INHIBIT_DEFAULT_DEPS = "1"
 
-DEPENDS             += "virtual/kernel morello-initramfs mtools-native e2fsprogs-native coreutils-native bc-native util-linux-native"
+MACHINE_LINUX_REQUIRE ?= ""
+MACHINE_LINUX_REQUIRE:morello-fvp = "morello-linux-image-fvp.inc"
+MACHINE_LINUX_REQUIRE:morello-soc = "morello-linux-image-soc.inc"
+
+require ${MACHINE_LINUX_REQUIRE}
+
+PACKAGE_ARCH         = "${MACHINE_ARCH}"
+
+DEPENDS             += "virtual/kernel virtual/grub-efi morello-initramfs mtools-native e2fsprogs-native coreutils-native bc-native util-linux-native"
 PROVIDES             = "${OUTPUTS_NAME}"
 
 ESP_SIZE             = "100"
@@ -20,11 +28,11 @@ PART_START_ALIGNMENT = "2048"
 
 ESP_IMAGE            = "${OUTPUTS_NAME}-esp"
 
-ROOTFS               = "${DEPLOY_DIR}/images/morello-linux-glibc/rootfs-morello-linux-glibc.ext4"
+ROOTFS               = "${DEPLOY_DIR}/images/morello-${TARGET_PLATFORM}/rootfs-morello-${TARGET_PLATFORM}.ext4"
 
-do_compile[noexec]        = "1"
-do_configure[depends]    += "${MORELLO_ROOTFS_IMAGE}:do_image_complete morello-initramfs:do_deploy"
-do_configure[mcdepends]  += "mc:${BB_CURRENT_MC}:morello-firmware:board-firmware-image:do_deploy"
+do_compile[noexec]      = "1"
+do_configure[depends]  += "${MORELLO_ROOTFS_IMAGE}:do_image_complete morello-initramfs:do_deploy"
+do_configure[depends]  += "board-firmware-image:do_deploy"
 
 def get_next_part_start (d):
     next_image_start = int(d.getVar('BOOT_SECTORS')) + int(d.getVar('PART_START_ALIGNMENT')) + int(d.getVar('PART_START_ALIGNMENT')) - 1
@@ -103,9 +111,9 @@ do_install() {
 
     local part0="${BSP_GRUB_DIR}/grub-efi-bootaa64.efi"
     local part1="${BSP_GRUB_DIR}/grub-config.cfg.processed"
-    local part2="${BSP_DTB_DIR}/morello-soc.dtb"
-    local part3="${DEPLOY_DIR}/images/morello-linux-glibc/Image"
-    local part4="${DEPLOY_DIR}/images/morello-linux-glibc/morello-initramfs/initramfs"
+    local part2="${BSP_DTB_DIR}/morello-${TARGET_PLATFORM}.dtb"
+    local part3="${DEPLOY_DIR}/images/morello-${TARGET_PLATFORM}/Image"
+    local part4="${DEPLOY_DIR}/images/morello-${TARGET_PLATFORM}/morello-initramfs/initramfs"
 
     rm -f ${ESP_IMAGE}.img
 

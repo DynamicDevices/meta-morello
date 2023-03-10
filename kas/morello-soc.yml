@@ -2,6 +2,6 @@ header:
   version: 11
   includes:
     - base.yml
-machine: morello-bsp
+machine: morello-soc
 target:
-  - board-firmware-image
+  - morello-linux-image

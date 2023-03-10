@@ -1,4 +1,4 @@
-COMPATIBLE_MACHINE = "morello-linux"
+COMPATIBLE_MACHINE = "morello"
 
 SRC_URI   = "git://git.morello-project.org/morello/binutils-gdb.git;protocol=https;branch=${SRCBRANCH}"
 SRCBRANCH = "users/ARM/morello-binutils-gdb-master"

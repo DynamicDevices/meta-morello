@@ -68,11 +68,13 @@ check-layers:
 # Build stage, the actual build jobs
 #
 
-morello-bsp:
+morello-soc:
   extends: .build
 
-morello-linux-glibc:
+morello-fvp:
   extends: .build
-
-morello-linux-musl:
-  extends: .build
+  parallel:
+    matrix:
+      - TESTING: [testimage]
+  tags:
+    - x86_64
